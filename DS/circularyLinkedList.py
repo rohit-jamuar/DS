@@ -58,7 +58,7 @@ class CL:
 	
 	def traversal(self):
 		cur=self.__head
-		while cur and CL.__size:
+		while cur:
 			print cur.val,
 			if cur.Next!=self.__head:
 				cur=cur.Next
