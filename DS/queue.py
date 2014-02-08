@@ -18,10 +18,8 @@ class queue:
 			print "Empty queue!"
 	
 	def isEmpty(self):
-		if len(self.__q)==0:
-			return True
-		return False
-	
+		return True if len(self.__q)==0 else False
+			
 	def printQ(self):
 		for i in self.__q:
 			print i,
