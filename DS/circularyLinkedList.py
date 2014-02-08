@@ -67,8 +67,9 @@ class CL:
 				break
 
 	def shift(self,i=1):
-		if type(i)==type(1):
+		if type(i)==int:
 			while i!=0:
+				self.__tail=self.__head
 				self.__head=self.__head.Next
 				i-=1
 
