@@ -301,13 +301,13 @@ class BST:
 		while not q.isEmpty():
 			x=q.dequeue()
 			
-			if arr[2*index+1]:
+			if 2*index+1<len(arr) and arr[2*index+1]:
 				x.left=Node(arr[2*index+1])
 				q.enqueue(x.left)
 			else:
 				x.left=None
 						
-			if arr[2*index+2]:
+			if 2*index+2<len(arr) and arr[2*index+2]:
 				x.right=Node(arr[2*index+2])
 				q.enqueue(x.right)
 			else:
