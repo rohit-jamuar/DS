@@ -25,14 +25,24 @@ class DoublyLinkedList:
     def __len__(self):
         return self.length
 
-    def __reversed__(self):
-        ctr, output = self.tail, ''
-        while ctr:
-            output += str(ctr.val)
-            ctr = ctr.left
+    def __getitem__(self, k):
+        if any([k < 0, k >= self.length, not self.head]):
+            return
+        else:
+            ctr = self.head
+            while k:
+                ctr = ctr.right
+                k -= 1
             if ctr:
-                output += ' '
-        return output
+                return ctr.val
+
+    def reverse(self):
+        if self.head:
+            front, back, ctr = self.head, self.tail, self.length//2
+            while ctr >= 1:
+                front.val, back.val = back.val, front.val
+                front, back = front.right, back.left
+                ctr -= 1
 
     def insert(self, val):
         new_node = val if isinstance(val, DoubleLink) else DoubleLink(val)
@@ -61,6 +71,7 @@ class DoublyLinkedList:
         new_node = DoubleLink(val)
         if not self.head:
             self.head = self.tail = new_node
+            self.length += 1
         else:
             pre, cur = None, self.head
             while cur and cur.val <= val:
@@ -83,10 +94,37 @@ class DoublyLinkedList:
         return True if ctr and ctr.val == val else False
 
     def delete(self, val):
-        pass
+        if self.head:
+            cur, pre = self.head, None
+            while cur and cur.val != val:
+                pre = cur
+                cur = cur.right
+            if cur:
+                if cur == self.head:
+                    self.delete_at_start()
+                elif cur == self.tail:
+                    self.delete_at_end()
+                else:
+                    pre.right = cur.right
+                    cur.right.left = pre
+                    self.length -= 1
 
     def delete_at_start(self):
-        pass
+        if self.head:
+            cur = self.head
+            self.head = cur.right
+            if self.head:
+                self.head.left = None
+            if cur == self.tail:
+                self.tail = self.head
+            self.length -= 1
 
     def delete_at_end(self):
-        pass
+        if self.tail:
+            cur = self.tail
+            self.tail = self.tail.left
+            if self.tail:
+                self.tail.right = None
+            if cur == self.head:
+                self.head = self.tail
+            self.length -= 1
