@@ -101,30 +101,39 @@ class DoublyLinkedList:
                 cur = cur.right
             if cur:
                 if cur == self.head:
-                    self.delete_at_start()
+                    return self.delete_at_start()
                 elif cur == self.tail:
-                    self.delete_at_end()
+                    return self.delete_at_end()
                 else:
+                    val_to_return = cur.val
                     pre.right = cur.right
                     cur.right.left = pre
                     self.length -= 1
+                    del(cur)
+                    return val_to_return
 
     def delete_at_start(self):
         if self.head:
             cur = self.head
+            val_to_return = cur.val
             self.head = cur.right
             if self.head:
                 self.head.left = None
             if cur == self.tail:
                 self.tail = self.head
             self.length -= 1
+            del(cur)
+            return val_to_return
 
     def delete_at_end(self):
         if self.tail:
             cur = self.tail
+            val_to_return = cur.val
             self.tail = self.tail.left
             if self.tail:
                 self.tail.right = None
             if cur == self.head:
                 self.head = self.tail
             self.length -= 1
+            del(cur)
+            return val_to_return

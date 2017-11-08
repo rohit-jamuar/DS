@@ -25,6 +25,17 @@ class SinglyLinkedList:
     def __repr__(self):
         return self.__str__()
 
+    def __getitem__(self, k):
+        if any([k < 0, k >= self.length, not self.root]):
+            return
+        else:
+            ctr = self.root
+            while k > 0:
+                ctr = ctr.right
+                k -= 1
+            if ctr:
+                return ctr.val
+
     def insert(self, val):
         self.insert_at_end(val)
 
@@ -87,12 +98,14 @@ class SinglyLinkedList:
                 self.root = cur.right
             else:
                 pre.right = cur.right
+            val_to_return = cur.val
             del(cur)
             self.length -= 1
+            return val_to_return
 
     def delete_at_start(self):
         if self.root:
-            self.delete(self.root.val)
+            return self.delete(self.root.val)
 
     def delete_at_end(self):
         pre, cur = None, self.root
@@ -101,5 +114,7 @@ class SinglyLinkedList:
             cur = cur.right
         if pre:
             pre.right = None
+            val_to_return = cur.val
             del(cur)
             self.length -= 1
+            return val_to_return
