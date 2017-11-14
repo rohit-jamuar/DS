@@ -24,13 +24,13 @@ class Heap:
         if len(self.data) > 1:
            self._bubble_up()
 
-    def remove(self):
+    def remove(self, end=None):
         if self.data:
             item_removed = self.data[0]
             if len(self.data) > 1:
                 self.data[0] = self.data[-1]
                 self.data.pop(len(self.data)-1)
-                self._bubble_down()
+                self._bubble_down(end if end else len(self.data))
             else:
                 self.data = list()
             return item_removed
@@ -48,25 +48,35 @@ class Heap:
                     self.data[ctr], self.data[ctr//2] = self.data[ctr//2], self.data[ctr]
                 ctr = ctr // 2
 
-    def _bubble_down(self):
-        ctr, data_size = 0, len(self.data)
+    def _bubble_down(self, last_index):
+        ctr, data_size = 0, last_index
         if self.heap_type == 'min':
             while ctr < data_size:
+                inc_by_one, inc_by_two = False, False
                 if (2*ctr+1) < data_size and self.data[ctr] > self.data[2*ctr+1]:
                     self.data[2*ctr+1], self.data[ctr] = self.data[ctr], self.data[2*ctr+1]
-                    ctr = 2*ctr + 1
+                    inc_by_one = True
                 if (2*ctr+2) < data_size and self.data[ctr] > self.data[2*ctr+2]:
                     self.data[2*ctr+2], self.data[ctr] = self.data[ctr], self.data[2*ctr+2]
+                    inc_by_two = True
+                if inc_by_two:
                     ctr = 2*ctr + 2
+                elif inc_by_one:
+                    ctr = 2*ctr + 1
                 else:
                     break
         else:
             while ctr < data_size:
+                inc_by_one, inc_by_two = False, False
                 if (2*ctr+1) < data_size and self.data[ctr] < self.data[2*ctr+1]:
                     self.data[2*ctr+1], self.data[ctr] = self.data[ctr], self.data[2*ctr+1]
-                    ctr = 2*ctr + 1
+                    inc_by_one = True
                 if (2*ctr+2) < data_size and self.data[ctr] < self.data[2*ctr+2]:
                     self.data[2*ctr+2], self.data[ctr] = self.data[ctr], self.data[2*ctr+2]
+                    inc_by_two = True
+                if inc_by_two:
                     ctr = 2*ctr + 2
+                elif inc_by_one:
+                    ctr = 2*ctr + 1
                 else:
                     break

@@ -3,6 +3,7 @@
 import unittest
 from heap import Heap
 import sys
+from node_definition import PriorityQTask
 
 class TestInsert(unittest.TestCase):
     def setUp(self):
@@ -42,3 +43,21 @@ class TestDelete(unittest.TestCase):
         for i in range(len(self.heap_min)):
             self.heap_min.remove()
         self.assertFalse(self.heap_min.remove())
+
+class TestPriorityQ(unittest.TestCase):
+    def setUp(self):
+        self.PQ = Heap()
+        self.PQ.insert(PriorityQTask(100, 'socialize?'))
+        self.PQ.insert(PriorityQTask(2, 'code'))
+        self.PQ.insert(PriorityQTask(0, 'sleep'))
+        self.PQ.insert(PriorityQTask(4, 'study'))
+        self.PQ.insert(PriorityQTask(1, 'sleep, really!'))
+        self.PQ.insert(PriorityQTask(3, 'plan ahead'))
+
+    def test_ordering(self):
+        self.assertEqual(self.PQ.remove().name, 'sleep')
+        self.assertEqual(self.PQ.remove().name, 'sleep, really!')
+        self.assertEqual(self.PQ.remove().name, 'code')
+        self.assertEqual(self.PQ.remove().name, 'plan ahead')
+        self.assertEqual(self.PQ.remove().name, 'study')
+        self.assertEqual(self.PQ.remove().name, 'socialize?')
